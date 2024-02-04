@@ -1,3 +1,4 @@
+import { IsString } from 'class-validator'
 import { Resume } from 'src/resume/entities/resume.entity'
 import { User } from 'src/user/entities/user.entity'
 import { Vacancy } from 'src/vacancy/entities/vacancy.entity'
@@ -12,11 +13,30 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 
+// enum ResponseStatus {
+//   UNVIEWED = 'Не переглянуто',
+//   VIEWED = 'Переглянуто',
+//   INTERVIEW = 'Співбесіда',
+//   REFUSAL = 'Відмова',
+// }
+export type ResponseStatus =
+  | 'Не переглянуто'
+  | 'Переглянуто'
+  | 'Співбесіда'
+  | 'Відмова'
+
 @Entity()
 @Unique(['user', 'vacancy'])
 export class Response {
   @PrimaryGeneratedColumn({ name: 'response_id' })
   id: number
+
+  @Column({
+    type: 'enum',
+    enum: ['Не переглянуто', 'Переглянуто', 'Співбесіда', 'Відмова'],
+    default: ['Переглянуто'],
+  })
+  status: ResponseStatus
 
   @ManyToOne(() => Vacancy, vacancy => vacancy.responses, {
     onDelete: 'CASCADE',

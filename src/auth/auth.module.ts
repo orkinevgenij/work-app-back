@@ -1,14 +1,15 @@
-import { Module } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from 'src/user/entities/user.entity';
-import { UserService } from 'src/user/user.service';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
-import { LocalStrategy } from './strategies/local-strategy';
-import { JwtStrategy } from './strategies/jwt-strategy';
-import { RefreshJwtStrategy } from './strategies/refreshToken.strategy';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { Module } from '@nestjs/common'
+import { JwtModule } from '@nestjs/jwt'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { User } from 'src/user/entities/user.entity'
+import { UserService } from 'src/user/user.service'
+import { AuthController } from './auth.controller'
+import { AuthService } from './auth.service'
+import { LocalStrategy } from './strategies/local-strategy'
+import { JwtStrategy } from './strategies/jwt-strategy'
+import { RefreshJwtStrategy } from './strategies/refreshToken.strategy'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { EmailService } from 'src/email/email.service'
 
 @Module({
   providers: [
@@ -17,6 +18,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     LocalStrategy,
     JwtStrategy,
     RefreshJwtStrategy,
+    EmailService,
   ],
   controllers: [AuthController],
   imports: [

@@ -43,9 +43,10 @@ export class ResumeService {
     return await this.resumeRepo.find()
   }
   async findOneResume(id: number) {
-    return await this.resumeRepo.findOne({
+    const resume = await this.resumeRepo.findOne({
       where: { id },
     })
+    return resume
   }
 
   async findMyResume(id: number) {

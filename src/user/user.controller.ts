@@ -3,13 +3,14 @@ import {
   Controller,
   Get,
   Param,
+  Post,
   Put,
   Req,
   UseGuards,
 } from '@nestjs/common'
+import { JwtGuard } from 'src/auth/guards/jwt-auth.guard'
 import { UpdateUserDto } from './dto/createUserDto'
 import { UserService } from './user.service'
-import { JwtGuard } from 'src/auth/guards/jwt-auth.guard'
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -29,5 +30,17 @@ export class UserController {
   @UseGuards(JwtGuard)
   async updateProfile(@Req() req, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.updateProfile(+req.user.id, updateUserDto)
+  }
+
+  @Post('forgot-password')
+  async forgotPassword(@Body() updateUserDto: UpdateUserDto) {
+    console.log(updateUserDto)
+    return this.userService.forgotPassword(updateUserDto)
+  }
+
+  @Post('change-password')
+  @UseGuards(JwtGuard)
+  async changePassword(@Req() req, @Body() updateUserDto: UpdateUserDto) {
+    return this.userService.changePassword(+req.user.id, updateUserDto)
   }
 }

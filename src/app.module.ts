@@ -5,10 +5,11 @@ import { AuthModule } from './auth/auth.module'
 import { CategoryModule } from './category/category.module'
 import { CityModule } from './city/city.module'
 import { CompanyModule } from './company/company.module'
+import { EmailModule } from './email/email.module'
+import { ResponseModule } from './response/response.module'
 import { ResumeModule } from './resume/resume.module'
 import { UserModule } from './user/user.module'
 import { VacancyModule } from './vacancy/vacancy.module'
-import { ResponseModule } from './response/response.module'
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ResponseModule } from './response/response.module'
     CityModule,
     ResumeModule,
     ResponseModule,
+    EmailModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -30,9 +32,15 @@ import { ResponseModule } from './response/response.module'
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        synchronize: true,
-        entities: [__dirname + '/**/*.entity{.js, .ts}'],
+        entities: ['dist/**/*.entity{.ts,.js}'],
+        migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
+        cli: {
+          migrationsDir: __dirname + '/migrations/',
+        },
+        synchronize: false,
+        autoLoadEntities: true,
       }),
+
       inject: [ConfigService],
     }),
   ],

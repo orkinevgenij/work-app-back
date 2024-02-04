@@ -15,7 +15,7 @@ export const cities = [
   { name: 'Суми' },
   { name: 'Черкаси' },
   { name: 'Нікополь' },
-];
+]
 export const categories = [
   { name: 'IT' },
   { name: 'Дизайн' },
@@ -27,4 +27,4 @@ export const categories = [
   { name: 'Строительство' },
   { name: 'Искусство' },
   { name: 'Наука' },
-];
+]
