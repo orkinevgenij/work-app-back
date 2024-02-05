@@ -33,9 +33,6 @@ export class Response {
   })
   status: ResponseStatus
 
-  @Column({ nullable: true })
-  test: string
-
   @ManyToOne(() => Vacancy, vacancy => vacancy.responses, {
     onDelete: 'CASCADE',
   })
