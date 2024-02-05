@@ -41,7 +41,6 @@ export class UserService {
         email: createUserDto.email,
       },
     })
-
     if (existUser) throw new BadRequestException('This email already exist')
     const salt = await bcrypt.genSalt(10)
     const user = await this.userRepo.save({
@@ -57,6 +56,7 @@ export class UserService {
     const accessToken = this.jwtService.sign({
       id: user.id,
       username: createUserDto.email,
+      role: user.role,
       sub: {
         name: createUserDto.name,
       },

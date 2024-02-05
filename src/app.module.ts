@@ -25,7 +25,6 @@ import { VacancyModule } from './vacancy/vacancy.module'
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         host: configService.get('DB_HOST'),
@@ -38,8 +37,9 @@ import { VacancyModule } from './vacancy/vacancy.module'
         cli: {
           migrationsDir: __dirname + '/migrations/',
         },
-        synchronize: true,
+        synchronize: false,
         autoLoadEntities: true,
+        migrationsRun: process.env.NODE_ENV === 'production',
       }),
 
       inject: [ConfigService],
