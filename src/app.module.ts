@@ -37,8 +37,8 @@ import { VacancyModule } from './vacancy/vacancy.module'
         cli: {
           migrationsDir: __dirname + '/migrations/',
         },
-        synchronize: false,
         autoLoadEntities: true,
+        synchronize: false,
         migrationsRun: process.env.NODE_ENV === 'production',
       }),
 

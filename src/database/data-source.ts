@@ -12,7 +12,6 @@ export default new DataSource({
   entities: ['dist/**/*.entity{.ts,.js}'],
   migrations: ['src/migrations/**/*.ts'],
   subscribers: ['src/subscriber/**/*.ts'],
-  synchronize: false,
   dropSchema: false,
-  migrationsTableName: 'migration_table',
+  synchronize: false,
 })

@@ -13,17 +13,12 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 
-// enum ResponseStatus {
-//   UNVIEWED = 'Не переглянуто',
-//   VIEWED = 'Переглянуто',
-//   INTERVIEW = 'Співбесіда',
-//   REFUSAL = 'Відмова',
-// }
-export type ResponseStatus =
-  | 'Не переглянуто'
-  | 'Переглянуто'
-  | 'Співбесіда'
-  | 'Відмова'
+enum ResponseStatus {
+  UNVIEWED = 'Не переглянуто',
+  VIEWED = 'Переглянуто',
+  INTERVIEW = 'Співбесіда',
+  REFUSAL = 'Відмова',
+}
 
 @Entity()
 @Unique(['user', 'vacancy'])
@@ -37,6 +32,9 @@ export class Response {
     default: ['Переглянуто'],
   })
   status: ResponseStatus
+
+  @Column({ nullable: true })
+  test: string
 
   @ManyToOne(() => Vacancy, vacancy => vacancy.responses, {
     onDelete: 'CASCADE',
