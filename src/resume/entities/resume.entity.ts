@@ -42,7 +42,6 @@ export class Resume {
     url: string
     public_id: string
   }
-
   @Column({ name: 'user_id' })
   user: number
 
