@@ -34,7 +34,6 @@ export class UserController {
 
   @Post('forgot-password')
   async forgotPassword(@Body() updateUserDto: UpdateUserDto) {
-    console.log(updateUserDto)
     return this.userService.forgotPassword(updateUserDto)
   }
 

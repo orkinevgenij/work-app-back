@@ -1,4 +1,11 @@
-import { IsEmail, IsString, IsNumber } from 'class-validator'
+import {
+  IsEmail,
+  IsString,
+  IsNumber,
+  IsObject,
+  IsOptional,
+  IsNotEmpty,
+} from 'class-validator'
 
 export class CreateResumeDto {
   @IsString()
@@ -17,6 +24,9 @@ export class CreateResumeDto {
   salary: number
 
   @IsString()
+  age: string
+
+  @IsString()
   city: string
 
   @IsString()
@@ -24,4 +34,11 @@ export class CreateResumeDto {
 
   @IsString()
   profile: string
+
+  @IsObject()
+  @IsNotEmpty()
+  file: {
+    url: string
+    public_id: string
+  }
 }

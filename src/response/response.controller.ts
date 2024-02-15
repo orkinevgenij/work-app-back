@@ -16,12 +16,7 @@ import { RolesGuard } from 'src/guard/roles.guard'
 import { Roles } from 'src/auth/decorators/roles.decorator'
 import { UpdateResponseDto } from './dto/update-response.dto'
 import { Paginate, PaginateQuery } from 'nestjs-paginate'
-enum ResponseStatus {
-  UNVIEWED = 'Не переглянуто',
-  VIEWED = 'Переглянуто',
-  INTERVIEW = 'Співбесіда',
-  REFUSAL = 'Відмова',
-}
+
 @Controller('response')
 @Roles(UserRole.User)
 export class ResponseController {

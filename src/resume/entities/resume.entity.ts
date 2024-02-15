@@ -16,6 +16,9 @@ export class Resume {
   @Column()
   lastname: string
 
+  @Column({ nullable: true })
+  age: string
+
   @Column()
   city: string
 
@@ -33,6 +36,12 @@ export class Resume {
 
   @Column()
   profile: string
+
+  @Column({ type: 'jsonb' })
+  file: {
+    url: string
+    public_id: string
+  }
 
   @Column({ name: 'user_id' })
   user: number

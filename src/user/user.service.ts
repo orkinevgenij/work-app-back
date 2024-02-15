@@ -1,4 +1,3 @@
-import { MailerService } from '@nestjs-modules/mailer'
 import {
   BadRequestException,
   Injectable,
@@ -8,11 +7,11 @@ import {
 import { JwtService } from '@nestjs/jwt'
 import { InjectRepository } from '@nestjs/typeorm'
 import * as bcrypt from 'bcrypt'
+import * as randomstring from 'randomstring'
 import { User } from 'src/user/entities/user.entity'
 import { Repository } from 'typeorm'
 import { EmailService } from './../email/email.service'
 import { CreateUserDto, UpdateUserDto } from './dto/createUserDto'
-import * as randomstring from 'randomstring'
 
 @Injectable()
 export class UserService {
@@ -41,8 +40,9 @@ export class UserService {
         email: createUserDto.email,
       },
     })
-    if (existUser) throw new BadRequestException('This email already exist')
+    if (existUser) throw new BadRequestException('Ця пошта вже зареєстрована')
     const salt = await bcrypt.genSalt(10)
+
     const user = await this.userRepo.save({
       email: createUserDto.email,
       password: await bcrypt.hash(createUserDto.password, salt),
@@ -65,14 +65,14 @@ export class UserService {
   }
   async getProfile(user: User) {
     const profile = await this.userRepo.findOne({ where: { id: user.id } })
-    const { password, ...userData } = profile
-    return {
-      ...userData,
+    if (profile) {
+      const { password, ...userData } = profile
+      return {
+        ...userData,
+      }
     }
   }
   async updateProfile(id: number, updateUserDto: UpdateUserDto) {
-    console.log('Ваш новый пароль:', updateUserDto.password)
-    console.log({ id, ...updateUserDto })
     const updatedUser = await this.userRepo.preload({
       id,
       ...updateUserDto,
@@ -94,7 +94,7 @@ export class UserService {
     }
 
     const temporaryPassword = randomstring.generate(8)
-    await this.emailService.sendEmail(temporaryPassword)
+    await this.emailService.sendEmail(temporaryPassword, updateUserDto.email)
     user.password = temporaryPassword
 
     const updatedUser = await this.userRepo.save(user)
@@ -114,6 +114,6 @@ export class UserService {
       const { password, ...userData } = updatedPassword
       return { ...userData }
     }
-    throw new UnauthorizedException('Password are incorrect!')
+    throw new UnauthorizedException('Не вірний пароль')
   }
 }

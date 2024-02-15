@@ -16,7 +16,7 @@ export class AuthService {
     if (user && (await bcrypt.compare(password, user.password))) {
       return user
     }
-    throw new UnauthorizedException('User or password are incorrect!')
+    throw new UnauthorizedException('Не коректні логін чи пароль')
   }
 
   async login(user: User) {

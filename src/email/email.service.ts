@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common'
 @Injectable()
 export class EmailService {
   constructor(private mailerService: MailerService) {}
-  async sendEmail(password: string) {
+  async sendEmail(password: string, email: string) {
     const htmlContent = `<html>
     <head>
       <style>
@@ -37,7 +37,7 @@ export class EmailService {
     try {
       await this.mailerService.sendMail({
         from: 'orkinevgenij@gmail.com',
-        to: 'orkinevgenij@gmail.com',
+        to: email,
         subject: 'work_app',
         html: htmlContent,
       })

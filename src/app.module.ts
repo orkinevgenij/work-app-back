@@ -10,6 +10,8 @@ import { ResponseModule } from './response/response.module'
 import { ResumeModule } from './resume/resume.module'
 import { UserModule } from './user/user.module'
 import { VacancyModule } from './vacancy/vacancy.module'
+import { FilesModule } from './files/files.module'
+import { CloudinaryModule } from './cloudinary/cloudinary.module'
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { VacancyModule } from './vacancy/vacancy.module'
     ResumeModule,
     ResponseModule,
     EmailModule,
+    FilesModule,
+    CloudinaryModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

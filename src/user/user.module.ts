@@ -6,6 +6,7 @@ import { EmailService } from 'src/email/email.service'
 import { User } from 'src/user/entities/user.entity'
 import { UserController } from './user.controller'
 import { UserService } from './user.service'
+import { FilesService } from 'src/files/files.service'
 @Module({
   providers: [UserService, EmailService],
   imports: [

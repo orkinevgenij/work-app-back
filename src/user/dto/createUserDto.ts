@@ -19,7 +19,7 @@ export class CreateUserDto {
   @IsOptional()
   newPassword: string
 
-  @IsString()
+  @IsOptional()
   confirmPassword: string
 
   @IsString()

@@ -1,10 +1,19 @@
-import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Post,
+  Request,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common'
+import { FileInterceptor } from '@nestjs/platform-express'
 import { CreateUserDto } from 'src/user/dto/createUserDto'
+import { multerOptions } from 'src/utils/multer.config'
 import { UserService } from './../user/user.service'
 import { AuthService } from './auth.service'
 import { LocalAuthGuard } from './guards/local-auth.guard'
 import { RefreshJwtGuard } from './guards/refresh-jwt-auth.guard'
-import { JwtGuard } from './guards/jwt-auth.guard'
 
 @Controller('auth')
 export class AuthController {

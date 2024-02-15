@@ -14,7 +14,7 @@ import {
 } from 'typeorm'
 
 enum ResponseStatus {
-  UNVIEWED = 'Не переглянуто',
+  SENT = 'Відправлено',
   VIEWED = 'Переглянуто',
   INTERVIEW = 'Співбесіда',
   REFUSAL = 'Відмова',
@@ -28,8 +28,8 @@ export class Response {
 
   @Column({
     type: 'enum',
-    enum: ['Не переглянуто', 'Переглянуто', 'Співбесіда', 'Відмова'],
-    default: ['Переглянуто'],
+    enum: ['Відправлено', 'Переглянуто', 'Співбесіда', 'Відмова'],
+    default: ['Відправлено'],
   })
   status: ResponseStatus
 

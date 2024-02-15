@@ -1,41 +1,43 @@
 import {
-  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { PaginateConfig, PaginateQuery, paginate } from 'nestjs-paginate'
 import { Repository } from 'typeorm'
 import { CreateResponseDto } from './dto/create-response.dto'
-import { Response } from './entities/response.entity'
 import { UpdateResponseDto } from './dto/update-response.dto'
-import {
-  FilterOperator,
-  PaginateConfig,
-  PaginateQuery,
-  paginate,
-} from 'nestjs-paginate'
-enum ResponseStatus {
-  UNVIEWED = 'Не переглянуто',
-  VIEWED = 'Переглянуто',
-  INTERVIEW = 'Співбесіда',
-  REFUSAL = 'Відмова',
-}
+import { Response } from './entities/response.entity'
+import { ResumeService } from 'src/resume/resume.service'
+
 @Injectable()
 export class ResponseService {
   constructor(
     @InjectRepository(Response)
     private readonly responseRepo: Repository<Response>,
+    private readonly resumeService: ResumeService,
   ) {}
 
   async createResponse(createResponseDto: CreateResponseDto, id: number) {
+    // const resume = await this.resumeService.findOneResume(id)
+    // console.log('🚀 ~ ResponseService ~ createResponse ~ resume:', resume)
+    // if (!resume) {
+    //   throw new NotFoundException('Resume not found')
+    // }
     const newResponse = {
       vacancy: createResponseDto.vacancy,
       resume: createResponseDto.resume,
       coverLetter: createResponseDto.coverLetter,
       user: { id },
     }
-    return await this.responseRepo.save(newResponse)
+    try {
+      return await this.responseRepo.save(newResponse)
+    } catch (error) {
+      if (error.code === '23505') {
+        throw new ConflictException('Ви вже залишили відгук на вакансію')
+      }
+    }
   }
 
   async findResponseByCompany(id: number, query: PaginateQuery) {
@@ -59,7 +61,6 @@ export class ResponseService {
       where: {
         user: { id },
       },
-
       relations: {
         vacancy: {
           company: true,
@@ -90,10 +91,7 @@ export class ResponseService {
     const response = await this.responseRepo.findOne({
       where: { id: updateResponseDto.id },
     })
-    console.log(
-      '🚀 ~ ResponseService ~ changeResponseStatus ~ response:',
-      response,
-    )
+
     if (!response) {
       throw new NotFoundException('Response not found')
     }
