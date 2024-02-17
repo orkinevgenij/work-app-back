@@ -10,8 +10,8 @@ export default new DataSource({
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   entities: ['dist/**/*.entity{.ts,.js}'],
-  migrations: ['src/migrations/**/*.ts'],
-  subscribers: ['src/subscriber/**/*.ts'],
+  migrations: ['dist/migrations/**/*.ts'],
+  subscribers: ['dist/subscriber/**/*.ts'],
   dropSchema: false,
   synchronize: false,
 })

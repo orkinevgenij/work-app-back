@@ -19,6 +19,9 @@ export class Resume {
   @Column({ nullable: true })
   age: string
 
+  @Column({ nullable: true })
+  time: string
+
   @Column()
   city: string
 
