@@ -1,11 +1,11 @@
 import { CreateCompanyDto } from './dto/createCompanyDto'
 import { Controller, Post, UseGuards, Get } from '@nestjs/common'
-import { CompanyService } from './company.service'
 import { Body, Req } from '@nestjs/common'
 import { JwtGuard } from 'src/auth/guards/jwt-auth.guard'
 import { RolesGuard } from 'src/guard/roles.guard'
 import { UserRole } from 'src/auth/role.enum'
 import { Roles } from 'src/auth/decorators/roles.decorator'
+import { CompanyService } from './company.service'
 @Controller('company')
 export class CompanyController {
   constructor(private companyService: CompanyService) {}

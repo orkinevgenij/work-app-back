@@ -16,15 +16,9 @@ export class ResponseService {
   constructor(
     @InjectRepository(Response)
     private readonly responseRepo: Repository<Response>,
-    private readonly resumeService: ResumeService,
   ) {}
 
   async createResponse(createResponseDto: CreateResponseDto, id: number) {
-    // const resume = await this.resumeService.findOneResume(id)
-    // console.log('🚀 ~ ResponseService ~ createResponse ~ resume:', resume)
-    // if (!resume) {
-    //   throw new NotFoundException('Resume not found')
-    // }
     const newResponse = {
       vacancy: createResponseDto.vacancy,
       resume: createResponseDto.resume,

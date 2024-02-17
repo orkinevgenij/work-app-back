@@ -1,15 +1,5 @@
-import {
-  Body,
-  Controller,
-  Post,
-  Request,
-  UploadedFile,
-  UseGuards,
-  UseInterceptors,
-} from '@nestjs/common'
-import { FileInterceptor } from '@nestjs/platform-express'
+import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common'
 import { CreateUserDto } from 'src/user/dto/createUserDto'
-import { multerOptions } from 'src/utils/multer.config'
 import { UserService } from './../user/user.service'
 import { AuthService } from './auth.service'
 import { LocalAuthGuard } from './guards/local-auth.guard'

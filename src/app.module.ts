@@ -4,7 +4,6 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { AuthModule } from './auth/auth.module'
 import { CategoryModule } from './category/category.module'
 import { CityModule } from './city/city.module'
-import { CompanyModule } from './company/company.module'
 import { EmailModule } from './email/email.module'
 import { ResponseModule } from './response/response.module'
 import { ResumeModule } from './resume/resume.module'
@@ -12,6 +11,7 @@ import { UserModule } from './user/user.module'
 import { VacancyModule } from './vacancy/vacancy.module'
 import { FilesModule } from './files/files.module'
 import { CloudinaryModule } from './cloudinary/cloudinary.module'
+import { CompanyModule } from './company/company.module'
 
 @Module({
   imports: [
@@ -37,7 +37,9 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module'
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
         entities: ['dist/**/*.entity{.ts,.js}'],
-        migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
+        // migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
+        migrations: ['src/migrations/*{.ts,.js}'],
+
         cli: {
           migrationsDir: __dirname + '/migrations/',
         },
