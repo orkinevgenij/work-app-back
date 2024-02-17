@@ -37,9 +37,7 @@ import { CompanyModule } from './company/company.module'
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
         entities: ['dist/**/*.entity{.ts,.js}'],
-        // migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
-        migrations: ['src/migrations/*{.ts,.js}'],
-
+        migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
         cli: {
           migrationsDir: __dirname + '/migrations/',
         },
