@@ -43,7 +43,7 @@ import { CompanyModule } from './company/company.module'
         },
         autoLoadEntities: true,
         synchronize: false,
-        // migrationsRun: process.env.NODE_ENV === 'production',
+        migrationsRun: process.env.NODE_ENV === 'production',
       }),
 
       inject: [ConfigService],
