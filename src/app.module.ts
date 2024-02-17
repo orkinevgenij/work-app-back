@@ -42,7 +42,7 @@ import { CompanyModule } from './company/company.module'
           migrationsDir: __dirname + '/migrations/',
         },
         autoLoadEntities: true,
-        synchronize: true,
+        synchronize: false,
         migrationsRun: process.env.NODE_ENV === 'production',
       }),
 
