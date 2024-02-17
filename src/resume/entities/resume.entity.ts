@@ -37,9 +37,6 @@ export class Resume {
   @Column()
   profile: string
 
-  @Column( {nullable:true})
-  last: string
-
   @Column({ type: 'jsonb' })
   file: {
     url: string
