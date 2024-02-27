@@ -13,6 +13,7 @@ export class CloudinaryService {
             file.mimetype === 'application/pdf'
               ? 'work-app/resume'
               : 'work-app/avatars',
+          secure: true,
         },
         (error, result) => {
           if (error) reject(error)

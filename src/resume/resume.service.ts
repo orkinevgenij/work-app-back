@@ -47,13 +47,13 @@ export class ResumeService {
         user: id,
         avatar: avatarResume
           ? {
-              url: avatarResume.url,
+              url: avatarResume.secure_url,
               public_id: avatarResume.public_id,
             }
           : null,
         file: fileResume
           ? {
-              url: fileResume.url,
+              url: fileResume.secure_url,
               public_id: fileResume.public_id,
             }
           : null,
@@ -117,7 +117,7 @@ export class ResumeService {
     if (file) {
       const avatarResume = await this.cloudinaryService.uploadFile(file)
       updateResumeDto.avatar = {
-        url: avatarResume?.url,
+        url: avatarResume?.secure_url,
         public_id: avatarResume?.public_id,
       }
       await this.cloudinaryService.deleteFile(resume.avatar.public_id)
@@ -155,7 +155,7 @@ export class ResumeService {
     if (file) {
       const fileResume = await this.cloudinaryService.uploadFile(file)
       updateResumeDto.file = {
-        url: fileResume?.url,
+        url: fileResume?.secure_url,
         public_id: fileResume?.public_id,
       }
       await this.cloudinaryService.deleteFile(resume.file.public_id)
