@@ -1,9 +1,8 @@
 import {
-  Injectable,
   CanActivate,
   ExecutionContext,
   ForbiddenException,
-  BadRequestException,
+  Injectable,
 } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { UserRole } from 'src/auth/role.enum'

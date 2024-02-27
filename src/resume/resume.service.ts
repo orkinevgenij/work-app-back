@@ -29,25 +29,54 @@ export class ResumeService {
       },
     })
     if (resume.length < 3) {
-      const data = await this.cloudinaryService.uploadFile(file)
-      const newResume = {
+      let avatarResume = null
+      let fileResume = null
+      if (file.mimetype === 'application/pdf') {
+        fileResume = await this.cloudinaryService.uploadFile(file)
+      } else if (file.mimetype.startsWith('image/')) {
+        avatarResume = await this.cloudinaryService.uploadFile(file)
+      } else {
+        throw new Error('Unsupported file type')
+      }
+
+      const newResume: any = {
         name: createResumeDto.name,
         lastname: createResumeDto.lastname,
         position: createResumeDto.position,
-        city: createResumeDto.city,
-        phone: createResumeDto.phone,
-        email: createResumeDto.email,
-        profile: createResumeDto.profile,
-        salary: +createResumeDto.salary,
         age: createResumeDto.age,
         user: id,
-        file: {
-          url: data?.url,
-          public_id: data?.public_id,
-        },
+        avatar: avatarResume
+          ? {
+              url: avatarResume.url,
+              public_id: avatarResume.public_id,
+            }
+          : null,
+        file: fileResume
+          ? {
+              url: fileResume.url,
+              public_id: fileResume.public_id,
+            }
+          : null,
       }
+      if (createResumeDto.city) {
+        newResume.city = createResumeDto.city
+      }
+      if (createResumeDto.phone) {
+        newResume.phone = createResumeDto.phone
+      }
+      if (createResumeDto.email) {
+        newResume.email = createResumeDto.email
+      }
+      if (createResumeDto.profile) {
+        newResume.profile = createResumeDto.profile
+      }
+      if (createResumeDto.salary !== undefined) {
+        newResume.salary = +createResumeDto.salary
+      }
+
       return await this.resumeRepo.save(newResume)
     }
+
     throw new BadRequestException('Максимум 3 резюме')
   }
 
@@ -75,7 +104,7 @@ export class ResumeService {
     })
   }
 
-  async update(
+  async updateResume(
     id: number,
     updateResumeDto: UpdateResumeDto,
     file: Express.Multer.File,
@@ -86,19 +115,18 @@ export class ResumeService {
     if (!resume) throw new NotFoundException('Resume not found')
 
     if (file) {
-      const data = await this.cloudinaryService.uploadFile(file)
-      updateResumeDto.file = {
-        url: data?.url,
-        public_id: data?.public_id,
+      const avatarResume = await this.cloudinaryService.uploadFile(file)
+      updateResumeDto.avatar = {
+        url: avatarResume?.url,
+        public_id: avatarResume?.public_id,
       }
-      await this.cloudinaryService.deleteFile(resume.file.public_id)
+      await this.cloudinaryService.deleteFile(resume.avatar.public_id)
     } else {
-      updateResumeDto.file = {
-        url: resume?.file?.url,
-        public_id: resume?.file?.public_id,
+      updateResumeDto.avatar = {
+        url: resume?.avatar?.url,
+        public_id: resume?.avatar?.public_id,
       }
     }
-
     const updatedFields = {
       name: updateResumeDto.name,
       lastname: updateResumeDto.lastname,
@@ -109,6 +137,39 @@ export class ResumeService {
       profile: updateResumeDto.profile,
       salary: +updateResumeDto.salary,
       age: updateResumeDto.age,
+      avatar: updateResumeDto.avatar,
+    }
+    return await this.resumeRepo.update(id, updatedFields)
+  }
+
+  async updateResumeWithFile(
+    id: number,
+    updateResumeDto: UpdateResumeDto,
+    file: Express.Multer.File,
+  ) {
+    const resume = await this.resumeRepo.findOne({
+      where: { id },
+    })
+    if (!resume) throw new NotFoundException('Resume not found')
+
+    if (file) {
+      const fileResume = await this.cloudinaryService.uploadFile(file)
+      updateResumeDto.file = {
+        url: fileResume?.url,
+        public_id: fileResume?.public_id,
+      }
+      await this.cloudinaryService.deleteFile(resume.file.public_id)
+    } else {
+      updateResumeDto.file = {
+        url: resume?.file?.url,
+        public_id: resume?.file?.public_id,
+      }
+    }
+    const updatedFields = {
+      name: updateResumeDto.name,
+      lastname: updateResumeDto.lastname,
+      position: updateResumeDto.position,
+      city: updateResumeDto.city,
       file: updateResumeDto.file,
     }
     return await this.resumeRepo.update(id, updatedFields)
@@ -119,7 +180,7 @@ export class ResumeService {
       where: { id },
     })
     if (!resume) throw new NotFoundException('Resume not found')
-    await this.cloudinaryService.deleteFile(resume.file.public_id)
+    await this.cloudinaryService.deleteFile(resume.avatar.public_id)
     return await this.resumeRepo.delete(+id)
   }
 }

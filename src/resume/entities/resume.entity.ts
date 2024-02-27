@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  IsNull,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
@@ -10,38 +11,45 @@ export class Resume {
   @PrimaryGeneratedColumn({ name: 'resume_id' })
   id: number
 
-  @Column()
+  @Column({ nullable: true })
   name: string
 
-  @Column()
+  @Column({ nullable: true })
   lastname: string
 
   @Column({ nullable: true })
   age: string
 
-  @Column()
+  @Column({ nullable: true })
   city: string
 
-  @Column()
+  @Column({ nullable: true })
   salary: number
 
   @Column({ nullable: true })
   email: string
 
-  @Column()
+  @Column({ nullable: true })
   position: string
 
-  @Column()
+  @Column({ nullable: true })
   phone: string
 
-  @Column()
+  @Column({ nullable: true })
   profile: string
 
-  @Column({ type: 'jsonb' })
+  @Column({ type: 'jsonb', nullable: true })
+  avatar: {
+    url: string
+    public_id: string
+  }
+
+  @Column({ type: 'jsonb', nullable: true })
   file: {
     url: string
     public_id: string
   }
+
   @Column({ name: 'user_id' })
   user: number
 

@@ -9,7 +9,6 @@ import { Repository } from 'typeorm'
 import { CreateResponseDto } from './dto/create-response.dto'
 import { UpdateResponseDto } from './dto/update-response.dto'
 import { Response } from './entities/response.entity'
-import { ResumeService } from 'src/resume/resume.service'
 
 @Injectable()
 export class ResponseService {

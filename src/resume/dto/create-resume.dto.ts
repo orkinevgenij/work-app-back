@@ -1,43 +1,58 @@
 import {
-  IsEmail,
-  IsString,
-  IsNumber,
+  IsInt,
+  IsNotEmpty,
   IsObject,
   IsOptional,
-  IsNotEmpty,
+  IsString,
 } from 'class-validator'
 
 export class CreateResumeDto {
+  @IsOptional()
   @IsString()
-  name: string
+  name?: string
 
+  @IsOptional()
   @IsString()
-  lastname: string
+  lastname?: string
 
+  @IsOptional()
   @IsString()
-  position: string
+  position?: string
 
-  @IsEmail()
-  email: string
-
-  @IsNumber()
-  salary: number
-
+  @IsOptional()
   @IsString()
-  age: string
+  age?: string
 
+  @IsOptional()
   @IsString()
-  city: string
-
-  @IsString()
-  phone: string
+  city?: string
 
   @IsString()
-  profile: string
+  @IsOptional()
+  email?: string
+
+  @IsInt()
+  @IsOptional()
+  salary?: number
+
+  @IsString()
+  @IsOptional()
+  phone?: string
+
+  @IsString()
+  @IsOptional()
+  profile?: string
 
   @IsObject()
-  @IsNotEmpty()
-  file: {
+  @IsOptional()
+  avatar?: {
+    url: string
+    public_id: string
+  }
+
+  @IsObject()
+  @IsOptional()
+  file?: {
     url: string
     public_id: string
   }

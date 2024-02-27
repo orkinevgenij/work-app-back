@@ -1,30 +1,33 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
-  UseGuards,
+  Get,
+  HttpStatus,
+  Param,
+  ParseFilePipeBuilder,
+  Patch,
+  Post,
   Req,
-  UseInterceptors,
   UploadedFile,
+  UploadedFiles,
+  UseGuards,
+  UseInterceptors,
 } from '@nestjs/common'
-import { ResumeService } from './resume.service'
+import {
+  AnyFilesInterceptor,
+  FileFieldsInterceptor,
+  FileInterceptor,
+  FilesInterceptor,
+} from '@nestjs/platform-express'
+import { JwtGuard } from 'src/auth/guards/jwt-auth.guard'
 import { CreateResumeDto } from './dto/create-resume.dto'
 import { UpdateResumeDto } from './dto/update-resume.dto'
-import { JwtGuard } from 'src/auth/guards/jwt-auth.guard'
-import { FileInterceptor } from '@nestjs/platform-express'
-import { multerOptions } from 'src/utils/multer.config'
-import { CloudinaryService } from 'src/cloudinary/cloudinary.service'
+import { ResumeService } from './resume.service'
 
 @Controller('resume')
 export class ResumeController {
-  constructor(
-    private resumeService: ResumeService,
-    private readonly cloudinaryService: CloudinaryService,
-  ) {}
+  constructor(private resumeService: ResumeService) {}
 
   @Post()
   @UseGuards(JwtGuard)
@@ -60,12 +63,23 @@ export class ResumeController {
   @Patch(':id')
   @UseGuards(JwtGuard)
   @UseInterceptors(FileInterceptor('file'))
-  async update(
+  async updateResume(
     @Param('id') id: string,
     @Body() updateResumeDto: UpdateResumeDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    return this.resumeService.update(+id, updateResumeDto, file)
+    return this.resumeService.updateResume(+id, updateResumeDto, file)
+  }
+
+  @Patch('file/:id')
+  @UseGuards(JwtGuard)
+  @UseInterceptors(FileInterceptor('file'))
+  async updateResumeWithFile(
+    @Param('id') id: string,
+    @Body() updateResumeDto: UpdateResumeDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.resumeService.updateResumeWithFile(+id, updateResumeDto, file)
   }
 
   @Delete(':id')

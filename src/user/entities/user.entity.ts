@@ -1,3 +1,5 @@
+import * as bcrypt from 'bcrypt'
+import { Response } from 'src/response/entities/response.entity'
 import {
   BeforeUpdate,
   Column,
@@ -5,10 +7,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm'
-import * as bcrypt from 'bcrypt'
 import { Company } from '../../company/entities/company.entity'
-import { Response } from 'src/response/entities/response.entity'
-import { Exclude } from 'class-transformer'
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()

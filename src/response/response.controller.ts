@@ -60,7 +60,6 @@ export class ResponseController {
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(UserRole.Employer)
   async changeResponseStatus(@Body() updateResponseDto: UpdateResponseDto) {
-    console.log(updateResponseDto)
     return this.responseService.changeResponseStatus(updateResponseDto)
   }
 }
