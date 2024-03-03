@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
   Query,
+  Req,
   UseGuards,
 } from '@nestjs/common'
 import { CreateVacancyDto } from './dto/create-vacancy.dto'
@@ -64,12 +65,18 @@ export class VacancyController {
     return this.vacancyService.findByCategoryVacancy(+id, query)
   }
   @Get('company/:id')
-  async findByCompanyVacancy(
+  async findByCompanyVacancyPagination(
     @Param('id') id: string,
     @Paginate() query: PaginateQuery,
   ) {
-    return this.vacancyService.findByCompanyVacancy(+id, query)
+    return this.vacancyService.findByCompanyVacancyPagination(+id, query)
   }
+
+  @Get('all/company/:id')
+  async findByCompanyVacancy(@Param('id') id: string) {
+    return this.vacancyService.findByCompanyVacancy(+id)
+  }
+
   @Get('city/:id')
   async findByCityVacancy(
     @Param('id') id: string,

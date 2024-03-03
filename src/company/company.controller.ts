@@ -16,7 +16,7 @@ export class CompanyController {
     return this.companyService.createCompany(createCompanyDto, +req.user.id)
   }
 
-  @Get('my-companies')
+  @Get('my')
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(UserRole.Employer)
   async findMyCompany(@Req() req) {

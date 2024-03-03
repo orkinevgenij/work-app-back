@@ -103,7 +103,7 @@ export class VacancyService {
     }
     return paginate(query, this.vacancyRepo, config)
   }
-  async findByCompanyVacancy(id: number, query: PaginateQuery) {
+  async findByCompanyVacancyPagination(id: number, query: PaginateQuery) {
     const config: PaginateConfig<Vacancy> = {
       relations: ['company', 'category', 'city'],
       sortableColumns: ['createdAt', 'salary'],
@@ -116,6 +116,23 @@ export class VacancyService {
     }
     return paginate(query, this.vacancyRepo, config)
   }
+
+  async findByCompanyVacancy(id: number) {
+    const vacancy = await this.vacancyRepo.find({
+      where: {
+        company: {
+          id: +id,
+        },
+      },
+      relations: {
+        company: true,
+        city: true,
+      },
+    })
+
+    return vacancy
+  }
+
   async findByCityVacancy(id: number, query: PaginateQuery) {
     const config: PaginateConfig<Vacancy> = {
       relations: ['company', 'category', 'city'],

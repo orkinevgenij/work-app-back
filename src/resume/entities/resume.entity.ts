@@ -1,8 +1,12 @@
+import { Offer } from 'src/offer/entities/offer.entity'
 import {
   Column,
   CreateDateColumn,
   Entity,
   IsNull,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
@@ -58,4 +62,7 @@ export class Resume {
 
   @UpdateDateColumn()
   updatedAt: Date
+
+  @OneToMany(() => Offer, offer => offer.resume)
+  offers: Offer[]
 }

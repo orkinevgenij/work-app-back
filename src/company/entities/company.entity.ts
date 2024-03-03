@@ -7,32 +7,32 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from 'typeorm';
-import { User } from '../../user/entities/user.entity';
-import { Vacancy } from '../../vacancy/entities/vacancy.entity';
+} from 'typeorm'
+import { User } from '../../user/entities/user.entity'
+import { Vacancy } from '../../vacancy/entities/vacancy.entity'
 @Entity()
 export class Company {
   @PrimaryGeneratedColumn({ name: 'company_id' })
-  id: number;
+  id: number
 
   @Column({ nullable: false })
-  title: string;
+  title: string
 
   @Column({ nullable: false })
-  description: string;
+  description: string
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt: Date
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt: Date
 
-  @ManyToOne(() => User, (user) => user.companies, {
+  @ManyToOne(() => User, user => user.companies, {
     onDelete: 'SET NULL',
   })
   @JoinColumn({ name: 'user_id' })
-  user: User;
-  
-  @OneToMany(() => Vacancy, (vacancy) => vacancy.company)
-  vacancies: Vacancy[];
+  user: User
+
+  @OneToMany(() => Vacancy, vacancy => vacancy.company)
+  vacancies: Vacancy[]
 }
