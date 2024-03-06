@@ -26,5 +26,5 @@ export class CreateResponseDto {
   status: ResponseStatus
 
   @IsOptional()
-  coverLetter: string
+  message: string
 }

@@ -6,18 +6,22 @@ import {
   Patch,
   Param,
   Delete,
+  Req,
+  UseGuards,
 } from '@nestjs/common'
 import { ChatService } from './chat.service'
 import { CreateChatDto } from './dto/create-chat.dto'
 import { UpdateChatDto } from './dto/update-chat.dto'
+import { JwtGuard } from 'src/auth/guards/jwt-auth.guard'
 
 @Controller('chat')
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 
   @Post()
-  async create(@Body() createChatDto: CreateChatDto) {
-    return this.chatService.createMessage(createChatDto)
+  @UseGuards(JwtGuard)
+  async create(@Body() createChatDto: CreateChatDto, @Req() req) {
+    return this.chatService.createMessage(createChatDto, +req.user.id)
   }
 
   @Get('messages/:id')

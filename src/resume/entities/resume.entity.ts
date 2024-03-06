@@ -1,4 +1,3 @@
-import { Offer } from 'src/offer/entities/offer.entity'
 import {
   Column,
   CreateDateColumn,
@@ -62,7 +61,4 @@ export class Resume {
 
   @UpdateDateColumn()
   updatedAt: Date
-
-  @OneToMany(() => Offer, offer => offer.resume)
-  offers: Offer[]
 }

@@ -21,7 +21,7 @@ export class ResponseService {
     const newResponse = {
       vacancy: createResponseDto.vacancy,
       resume: createResponseDto.resume,
-      coverLetter: createResponseDto.coverLetter,
+      message: createResponseDto.message,
       user: { id },
     }
     try {
@@ -33,26 +33,57 @@ export class ResponseService {
     }
   }
 
-  async findResponseByCompany(id: number, query: PaginateQuery) {
-    const config: PaginateConfig<Response> = {
-      relations: { vacancy: { company: true }, resume: true, user: true },
-      sortableColumns: ['createdAt'],
-      defaultSortBy: [['createdAt', 'DESC']],
+  // async findResponseByCompany(id: number, query: PaginateQuery) {
+  //   const config: PaginateConfig<Response> = {
+  //     relations: { vacancy: { company: true }, resume: true, user: true },
+  //     sortableColumns: ['createdAt'],
+  //     defaultSortBy: [['createdAt', 'DESC']],
+  //     where: {
+  //       vacancy: {
+  //         company: {
+  //           id: +id,
+  //         },
+  //       },
+  //     },
+  //   }
+  //   return paginate(query, this.responseRepo, config)
+  // }
+  async findResponseByCompany(id: number) {
+    const response = await this.responseRepo.find({
       where: {
         vacancy: {
-          company: {
-            id: +id,
-          },
+          company: { id },
         },
       },
-    }
-    return paginate(query, this.responseRepo, config)
+      relations: {
+        vacancy: {
+          company: true,
+        },
+        resume: true,
+        user: true,
+      },
+    })
+    return response
   }
 
-  async findMyResponse(id: number) {
+  async findUserResponse(id: number) {
     return await this.responseRepo.find({
       where: {
-        user: { id },
+        resume: { user: id },
+      },
+      relations: {
+        vacancy: {
+          company: true,
+        },
+        resume: true,
+        user: true,
+      },
+    })
+  }
+  async findOneResponse(id: number) {
+    return await this.responseRepo.findOne({
+      where: {
+        id: id,
       },
       relations: {
         vacancy: {

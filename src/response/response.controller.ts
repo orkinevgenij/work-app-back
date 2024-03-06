@@ -30,21 +30,32 @@ export class ResponseController {
   ) {
     return this.responseService.findMyResponseWithPaginate(+req.user.id, query)
   }
-  @Get('paginate/:id')
+  // @Get('paginate/:id')
+  // @UseGuards(JwtGuard, RolesGuard)
+  // @Roles(UserRole.Employer)
+  // async findResponseByCompany(
+  //   @Param('id') id: string,
+  //   @Paginate() query: PaginateQuery,
+  // ) {
+  //   return this.responseService.findResponseByCompany(+id, query)
+  // }
+  @Get('company/:id')
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(UserRole.Employer)
-  async findResponseByCompany(
-    @Param('id') id: string,
-    @Paginate() query: PaginateQuery,
-  ) {
-    return this.responseService.findResponseByCompany(+id, query)
+  async findResponseByCompany(@Param('id') id: string) {
+    return this.responseService.findResponseByCompany(+id)
   }
 
-  @Get('my')
+  @Get('user')
   @UseGuards(JwtGuard, RolesGuard)
   @Roles(UserRole.User)
-  async findMyResponse(@Req() req) {
-    return this.responseService.findMyResponse(+req.user.id)
+  async findUserResponse(@Req() req) {
+    return this.responseService.findUserResponse(+req.user.id)
+  }
+
+  @Get(':id')
+  async findOneResponse(@Param('id') id: string) {
+    return this.responseService.findOneResponse(+id)
   }
 
   @Post()

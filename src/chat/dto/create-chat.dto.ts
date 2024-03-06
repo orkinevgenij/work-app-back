@@ -1,12 +1,13 @@
-import { IsInt, IsString } from 'class-validator'
+import { IsInt, IsOptional, IsString } from 'class-validator'
+import { User } from 'src/user/entities/user.entity'
 
 export class CreateChatDto {
   @IsString()
   message: string
 
-  @IsString()
-  author: string
+  @IsOptional()
+  user?: User
 
   @IsInt()
-  offerId: number
+  responseId: number
 }

@@ -53,6 +53,9 @@ export class VacancyService {
       where: {
         title: ILike(`%${title}%`),
       },
+      relations: {
+        city: true,
+      },
     }
     return paginate(query, this.vacancyRepo, config)
   }

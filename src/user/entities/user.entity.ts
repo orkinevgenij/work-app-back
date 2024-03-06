@@ -8,6 +8,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm'
 import { Company } from '../../company/entities/company.entity'
+import { Chat } from 'src/chat/entities/chat.entity'
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -36,6 +37,9 @@ export class User {
 
   @OneToMany(() => Response, response => response.user)
   responses: Response[]
+
+  @OneToMany(() => Chat, chat => chat.message)
+  messages: Chat[]
 
   @BeforeUpdate()
   async hashPassword() {

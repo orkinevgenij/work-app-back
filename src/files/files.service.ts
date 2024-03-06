@@ -18,7 +18,6 @@ export class FilesService {
   }
 
   async uploadFile(file: Express.Multer.File) {
-    console.log('🚀 ~ FilesService ~ uploadFile ~ avatar:', file)
     return file
   }
 }

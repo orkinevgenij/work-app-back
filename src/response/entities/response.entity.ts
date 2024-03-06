@@ -12,25 +12,14 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 
-enum ResponseStatus {
-  SENT = 'Відправлено',
-  VIEWED = 'Переглянуто',
-  INTERVIEW = 'Співбесіда',
-  REFUSAL = 'Відмова',
-}
-
 @Entity()
 @Unique(['user', 'vacancy'])
 export class Response {
   @PrimaryGeneratedColumn({ name: 'response_id' })
   id: number
 
-  @Column({
-    type: 'enum',
-    enum: ['Відправлено', 'Переглянуто', 'Співбесіда', 'Відмова'],
-    default: ['Відправлено'],
-  })
-  status: ResponseStatus
+  @Column({ default: '' })
+  status: string
 
   @ManyToOne(() => Vacancy, vacancy => vacancy.responses, {
     onDelete: 'CASCADE',
@@ -38,18 +27,18 @@ export class Response {
   @JoinColumn({ name: 'vacancy_id' })
   vacancy: Vacancy
 
-  @ManyToOne(() => User, user => user.responses)
-  @JoinColumn({ name: 'user_id' })
-  user: User
-
   @ManyToOne(() => Resume, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'resume_id' })
   resume: Resume
 
+  @ManyToOne(() => User, user => user.responses)
+  @JoinColumn({ name: 'user_id' })
+  user: User
+
   @Column({ nullable: true })
-  coverLetter: string
+  message: string
 
   @CreateDateColumn()
   createdAt: Date

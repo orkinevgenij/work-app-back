@@ -1,7 +1,10 @@
+import { User } from 'src/user/entities/user.entity'
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
@@ -14,14 +17,16 @@ export class Chat {
   @Column()
   message: string
 
-  @Column()
-  author: string
+  @Column({ name: 'response_id' })
+  responseId: number
 
-  @Column({ name: 'offer_id' })
-  offerId: number
   @CreateDateColumn()
   createdAt: Date
 
   @UpdateDateColumn()
   updatedAt: Date
+
+  @ManyToOne(() => User, user => user.messages)
+  @JoinColumn({ name: 'user_id' })
+  user: User
 }

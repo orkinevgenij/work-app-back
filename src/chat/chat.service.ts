@@ -11,11 +11,11 @@ export class ChatService {
     @InjectRepository(Chat)
     private readonly chatRepo: Repository<Chat>,
   ) {}
-  async createMessage(createChatDto: CreateChatDto) {
+  async createMessage(createChatDto: CreateChatDto, id: number) {
     const newMessage = {
       message: createChatDto.message,
-      author: createChatDto.author,
-      offerId: createChatDto.offerId,
+      responseId: createChatDto.responseId,
+      user: { id },
     }
     return await this.chatRepo.save(newMessage)
   }
@@ -23,7 +23,13 @@ export class ChatService {
   async findAllMessageOffer(id: number) {
     const messages = await this.chatRepo.find({
       where: {
-        offerId: id,
+        responseId: id,
+      },
+      relations: {
+        user: true,
+      },
+      order: {
+        createdAt: 'ASC',
       },
     })
     return messages

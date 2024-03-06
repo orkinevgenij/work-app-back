@@ -12,8 +12,7 @@ import { VacancyModule } from './vacancy/vacancy.module'
 import { FilesModule } from './files/files.module'
 import { CloudinaryModule } from './cloudinary/cloudinary.module'
 import { CompanyModule } from './company/company.module'
-import { OfferModule } from './offer/offer.module'
-import { ChatModule } from './chat/chat.module';
+import { ChatModule } from './chat/chat.module'
 
 @Module({
   imports: [
@@ -28,7 +27,6 @@ import { ChatModule } from './chat/chat.module';
     EmailModule,
     FilesModule,
     CloudinaryModule,
-    OfferModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

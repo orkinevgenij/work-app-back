@@ -12,7 +12,6 @@ import { Company } from '../../company/entities/company.entity'
 import { Category } from 'src/category/entities/category.entity'
 import { City } from 'src/city/entities/city.entity'
 import { Response } from 'src/response/entities/response.entity'
-import { Offer } from 'src/offer/entities/offer.entity'
 
 @Entity()
 export class Vacancy {
@@ -57,6 +56,4 @@ export class Vacancy {
 
   @OneToMany(() => Response, response => response.vacancy)
   responses: Response[]
-  @OneToMany(() => Offer, offer => offer.vacancy)
-  offers: Offer[]
 }
