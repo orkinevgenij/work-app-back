@@ -27,6 +27,7 @@ import { ChatModule } from './chat/chat.module'
     EmailModule,
     FilesModule,
     CloudinaryModule,
+    ChatModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -49,7 +50,6 @@ import { ChatModule } from './chat/chat.module'
 
       inject: [ConfigService],
     }),
-    ChatModule,
   ],
 })
 export class AppModule {}

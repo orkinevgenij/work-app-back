@@ -73,15 +73,15 @@ export class UserService {
     }
   }
   async updateProfile(id: number, updateUserDto: UpdateUserDto) {
+    const { password, ...updateUserDtoWithoutPassword } = updateUserDto
     const updatedUser = await this.userRepo.preload({
       id,
-      ...updateUserDto,
+      ...updateUserDtoWithoutPassword,
     })
     if (!updatedUser) {
       throw new Error('User not found')
     }
     const result = await this.userRepo.save(updatedUser)
-    await result.hashPassword()
     return result
   }
   async forgotPassword(updateUserDto: UpdateUserDto) {
@@ -99,7 +99,6 @@ export class UserService {
 
     const updatedUser = await this.userRepo.save(user)
     const { password, ...userData } = updatedUser
-
     return { ...userData }
   }
 

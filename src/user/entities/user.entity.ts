@@ -41,9 +41,9 @@ export class User {
   @OneToMany(() => Chat, chat => chat.message)
   messages: Chat[]
 
-  @BeforeUpdate()
-  async hashPassword() {
-    const saltOrRounds = 10
-    this.password = await bcrypt.hash(this.password, saltOrRounds)
-  }
+  // @BeforeUpdate()
+  // async hashPassword() {
+  //   const saltOrRounds = 10
+  //   this.password = await bcrypt.hash(this.password, saltOrRounds)
+  // }
 }
