@@ -1,17 +1,16 @@
 import { config } from 'dotenv'
 import { DataSource } from 'typeorm'
+
 config()
 
 export default new DataSource({
   type: 'postgres',
-  database: process.env.DB_NAME,
-  host: process.env.DB_HOST,
-  port: +process.env.DB_PORT,
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
+  url: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
   entities: ['dist/**/*.entity{.ts,.js}'],
-  migrations: ['src/migrations/**/*.ts'],
-  subscribers: ['src/subscriber/**/*.ts'],
-  dropSchema: false,
+  migrations: ['dist/migrations/*.js'],
+  subscribers: ['dist/subscriber/*.js'],
   synchronize: false,
 })
